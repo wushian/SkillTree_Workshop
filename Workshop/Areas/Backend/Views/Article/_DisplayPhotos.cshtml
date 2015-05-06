@@ -1,0 +1,29 @@
+﻿@model Workshop.Models.Article
+
+<div class="row col-md-offset-1">
+	<div class="col-md-1">
+		<strong>Photos</strong>
+	</div>
+	<div class="col-md-11">
+		<ul class="thumbnails list-unstyled">
+			@if (Model != null && Model.Photos != null)
+			{
+				foreach (var photo in Model.Photos)
+				{
+					var id = "photo_" + photo.ID;
+					var url = Url.Action("ArticlePhoto", "Article", new { id = photo.ID, w = 170, h = 128, fit = true });
+
+					<li id="@id" class="col-md-6 clearfix">
+						<div class="thumbnail clearfix">
+							<img src="@url" alt="@photo.FileName" class="pull-left span2 clearfix img-rounded" style="margin-right: 10px;">
+							<div class="caption" class="pull-left">
+								<h4>
+									<a href="@url">@photo.FileName</a>
+								</h4>
+							</div>
+					</li>
+				}
+			}
+		</ul>
+	</div>
+</div>

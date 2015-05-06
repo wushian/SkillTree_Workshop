@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Workshop.Models.Article>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@section jumbotron
+{
+	<div class="jumbotron">
+		<h1>SkillTree MVC教學</h1>
+		<p class="lead">利用循序漸進的方式，引導學員完成一個CMS網站，在 SkillTree 的課程中，您學到的不會是最新的技術，而是業界中、實務上可以立即上場的技術，我們希望藉由團對成員多年來開發各式各樣 ASP.NET MVC 的實務經驗中提取適合初學者的實戰經驗與技能。</p>
+		<p><a class="btn btn-lg btn-success" href="http://skilltree.my" role="button">SkillTree官網</a></p>
+	</div>
+}
+
+<div class="row">
+	<div class="container">
+		<div class="col-lg-12">
+			
+			@Html.Partial("_ListItem", Model)			
+
+		</div>
+	</div>
+</div>

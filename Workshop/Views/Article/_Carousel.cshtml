@@ -1,0 +1,53 @@
+﻿@model Workshop.Models.Article
+
+@if (Model.Photos.Any())
+{
+	var countIndicators = 0;
+	var countInners = 0;
+	
+	<div class="row">
+		<div class="col-md-12">
+			<div id="my-carousel" class="carousel slide" data-ride="carousel">
+
+				<ol class="carousel-indicators">
+					@foreach (var photo in Model.Photos)
+					{
+						<li data-target="#my-carousel" 
+							data-slide-to="@countIndicators" 
+							class="@(countIndicators == 0 ? "active" : "")"></li>
+
+						countIndicators++;
+					}
+				</ol>
+
+				<div class="carousel-inner">
+					@foreach (var photo in Model.Photos)
+					{
+						var url = photo == null
+							? ""
+							: Url.Action("ArticlePhoto", "Article", new { id = photo.ID, w = 1200, h = 600, fit = true });
+						
+						<div class="item @(countInners == 0 ? "active" : "")">
+							<img alt="@photo.FileName" src="@url">
+							@*<div class="carousel-caption">
+								<h3>Caption heading 1</h3>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+							</div>*@
+						</div>
+						
+						countInners++;
+					}
+				</div>
+
+				<a class="left carousel-control" href="#my-carousel" data-slide="prev">
+					<span class="glyphicon glyphicon-chevron-left"></span>
+				</a>
+				<a class="right carousel-control" href="#my-carousel" data-slide="next">
+					<span class="glyphicon glyphicon-chevron-right"></span>
+				</a>
+			</div>
+		</div>
+	</div>
+	<hr />
+	<div class="clearfix"></div>
+}

@@ -1,0 +1,119 @@
+﻿@model Workshop.Models.Article
+
+@{
+	ViewBag.Title = "Backend - Article";
+	Layout = "~/Areas/Backend/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "Article", FormMethod.Post, new
+{
+	@class = "form",
+	enctype = "multipart/form-data"
+}))
+{
+	@Html.AntiForgeryToken()
+
+	<div class="form-horizontal">
+		<h4>Article</h4>
+		<hr />
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.ID)
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.CategoryID, "CategoryID", htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
+				@Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.Summary, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.TextAreaFor(model => model.Summary, new { @class = "form-control", rows = "5" })
+				@Html.ValidationMessageFor(model => model.Summary, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.ContentText, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.ContentText, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.ContentText, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.IsPublish, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				<div class="checkbox">
+					@Html.EditorFor(model => model.IsPublish)
+					@Html.ValidationMessageFor(model => model.IsPublish, "", new { @class = "text-danger" })
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.PublishDate, htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.PublishDate, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.PublishDate, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		@Html.Partial("_Uploads")
+
+		@Html.Partial("_PhotoList", Model)
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<input type="submit" value="Save" class="btn btn-default" />
+			</div>
+		</div>
+	</div>
+}
+
+<div>
+	@Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@section scripts
+{
+	<script type="text/javascript">
+		$(function () {
+			$('.DeletePhoto').on('click', function (e) {
+				e.preventDefault();
+				var id = $(this).data('id');
+				var fileName = $(this).data('filename');
+				$('#DeleteModal').data('id', id).modal('show');
+				$('#DeleteModal #FileName').text(fileName);
+			});
+
+			$('#btnYes').click(function () {
+				var id = $('#DeleteModal').data('id');
+				$.post('@Url.Action("DeletePhoto", "Article")', { id: id },
+					function (data, textStatus, jqXHR) {
+						removePhoto(id);
+					}
+				);
+				$('#DeleteModal').modal('hide');
+			});
+		});
+
+		function removePhoto(container) {
+			console.log(arguments);
+			$("#photo_" + container).remove();
+		}
+	</script>
+}

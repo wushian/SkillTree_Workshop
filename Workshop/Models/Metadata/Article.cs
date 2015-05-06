@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace Workshop.Models
+{
+    [MetadataType(typeof(ArticleMetadata))]
+    public partial class Article
+    {
+        public class ArticleMetadata
+        {
+            [DataType(DataType.Html)]
+            public object ContentText { get; set; }
+
+            [UIHint("SystemUser")]
+            public object  CreateUser { get; set; }
+
+            [UIHint("SystemUser")]
+            public object  UpdateUser { get; set; }
+        }
+    }
+}

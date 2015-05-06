@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Workshop.Models.Article>
+
+@foreach (var item in Model)
+{
+	<h1>@item.Subject</h1>
+	<p>
+		「@(item.Summary)」
+	</p>
+	<div>
+		<span class="badge">Posted @(item.PublishDate)</span>
+		<div class="pull-right">
+			<a class="btn btn-primary btn-sm" href="@Url.Action("Details", "Article", new { id = item.ID })">
+				<span class="glyphicon glyphicon-star"></span> 觀看更多
+			</a>
+		</div>
+	</div>
+	<hr>
+}

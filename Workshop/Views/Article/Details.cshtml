@@ -1,0 +1,53 @@
+﻿@model Workshop.Models.Article
+
+@{
+	ViewBag.Title = "Details";
+}
+
+@section nav
+{
+	<ol class="breadcrumb">
+		<li>
+			<a href="@Url.Action("Index", "Home")">首頁</a><span class="divider"></span>
+		</li>
+		<li>
+			<a href="@Url.Action("List", "Article")">文章列表</a>
+		</li>
+	</ol>
+}
+
+<div class="row">
+	<div class="container">
+
+		@Html.Partial("_Carousel")
+
+		<div class="alert alert-success">
+			<div class="btn-group pull-right">
+				<button class="btn btn-success" type="button">
+					發佈時間
+					<span class="badge">@(Model.PublishDate)</span>
+				</button>
+				<button class="btn btn-success" type="button">
+					觀看次數
+					<span class="badge">@(Model.ViewCount)</span>
+				</button>
+				<button class="btn btn-success" type="button">
+					發佈人
+					<span class="badge">@Html.DisplayFor(model => model.CreateUser, "SystemUserName")</span>
+				</button>
+			</div>
+
+			<h2>@Model.Subject</h2>
+		</div>
+
+		<div class="col-lg-12">
+
+			<p class="lead">
+				@Html.Raw(Model.ContentText)
+			</p>
+
+		</div>
+
+	</div>
+
+</div>
